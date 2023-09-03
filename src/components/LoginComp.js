@@ -75,7 +75,8 @@ function LoginComp() {
                     placeholder="******"
                     {...register("password", {
                       required: true,
-                      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/,
+                      // pattern:
+                      //   /(?=.[0-9])(?=.[a-z])(?=.[A-Z])[0-9a-zA-Z!@#$%^&_]{8,}/g,
                     })}
                   />
                   {errors.password && (

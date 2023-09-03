@@ -15,28 +15,30 @@ function RegisterComp() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleRegistration = (data) => {
-    fetch("https://kab.testkai.tk/api/Account/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
+  const handleRegistration = async (data) => {
+    try {
+      const response = await fetch(
+        "https://kab.testkai.tk/api/Account/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         }
-        throw new Error("Registration failed");
-      })
-      .then((data) => {
+      );
+
+      if (response.ok) {
+        const responseData = await response.json();
         // Обробка успішної відповіді
-        console.log("Registration successful:", data);
-      })
-      .catch((error) => {
-        // Обробка помилки
-        console.error("Registration error:", error);
-      });
+        console.log("Registration successful:", responseData);
+      } else {
+        throw new Error("Registration failed");
+      }
+    } catch (error) {
+      // Обробка помилки
+      console.error("Registration error:", error);
+    }
   };
 
   const onSubmit = (data) => {
@@ -73,7 +75,7 @@ function RegisterComp() {
                 <Form.Control
                   type="text"
                   placeholder="Прізвище"
-                  {...register("surName", {
+                  {...register("surname", {
                     required: true,
                     pattern: /^[A-ZА-ЯІ][a-zа-яі]{1,}$/u,
                   })}
@@ -125,7 +127,7 @@ function RegisterComp() {
                   placeholder="******"
                   {...register("password", {
                     required: true,
-                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/,
+                    // pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/,
                   })}
                 />
                 {errors.password && (
