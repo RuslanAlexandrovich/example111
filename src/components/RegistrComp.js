@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 function RegisterComp() {
   const {
@@ -17,19 +18,19 @@ function RegisterComp() {
 
   const handleRegistration = async (data) => {
     try {
-      const response = await fetch(
-        "https://kab.testkai.tk/api/Account/register",
+      const response = await axios.post(
+        "http://kab.testkai.tk/api/Account/register",
+        data, // Відправляємо дані без JSON.stringify
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
         }
       );
 
-      if (response.ok) {
-        const responseData = await response.json();
+      if (response.status === 200) {
+        // Перевіряємо статус відповіді
+        const responseData = response.data; // Отримуємо дані відповіді
         // Обробка успішної відповіді
         console.log("Registration successful:", responseData);
       } else {

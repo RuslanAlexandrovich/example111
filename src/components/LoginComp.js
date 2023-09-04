@@ -5,9 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Link, Outlet } from "react-router-dom";
-import { Route, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
+import AuthService from "../services/AuthService";
 
 function LoginComp() {
   const {
@@ -19,23 +19,41 @@ function LoginComp() {
   const [showPassword, setShowPassword] = useState(false);
   const [token, setToken] = useState("");
 
-  const onSubmit = (data) => {
-    fetch("https://kab.testkai.tk/api/Account/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setToken(data.token);
-      })
-      .catch((error) => {
-        console.error("Login error:", error);
-      });
-    console.log(data);
+  const onSubmit = async (data) => {
+    AuthService.login(data);
   };
+  // async (data) => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://kab.testkai.tk/api/Account/login",
+  //       data,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     const token = response.data.token;
+
+  //     // Збереження токену в локальному сховищі
+  //     localStorage.setItem("token", token);
+
+  //     if (token) {
+  //       let userdata = parseJWT(token);
+  //       console.log(userdata);
+  //       console.log("token ok!");
+
+  //       console.log(token);
+  //     } else {
+  //       console.log("token undefined!");
+  //     }
+
+  //     setToken(response.data.token);
+  //   } catch (error) {
+  //     console.error("Login error:", error);
+  //   }
+  //   console.log(data);
+  // };
 
   const isAuthorized = token !== "";
 

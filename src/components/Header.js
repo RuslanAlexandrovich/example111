@@ -18,6 +18,7 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import SendEmail from "../pages/SendEmail";
 import SendCode from "../pages/SendCode";
+import AboutUser from "../pages/AboutUser.js";
 
 export default class Header extends Component {
   render() {
@@ -50,6 +51,7 @@ export default class Header extends Component {
           <Route path="/login" element={<Login />} />
           <Route path="/sendemail" element={<SendEmail />} />
           <Route path="/sendcode" element={<SendCode />} />
+          <Route path="/aboutuser" element={<AboutUser />} />
         </Routes>
       </>
     );
